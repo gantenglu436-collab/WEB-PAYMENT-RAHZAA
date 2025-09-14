@@ -4,7 +4,321 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Gateway - DANA, GoPay & QRIS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway - DANA, Gopay & QRIS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            color: #333;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .payment-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .payment-tab {
+            padding: 12px 25px;
+            background: #f0f0f0;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .payment-tab:hover, .payment-tab.active {
+            background: #4a4a4a;
+            color: white;
+        }
+        
+        .payment-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .payment-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .payment-details {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .payment-details h3 {
+            margin-bottom: 15px;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payment-details h3 i {
+            font-size: 1.5rem;
+        }
+        
+        .info-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6c6c6c;
+        }
+        
+        .info-box p {
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+        
+        .highlight {
+            background: #fff8e1;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .qris-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .qris-image {
+            max-width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .qris-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .instruction {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #6c7ae0;
+        }
+        
+        .instruction ol {
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .instruction li {
+            margin-bottom: 8px;
+        }
+        
+        .proof-button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+        
+        .proof-button:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .payment-tab {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .qris-image {
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Payment Gateway</h1>
+            <p>Pilih metode pembayaran yang Anda inginkan</p>
+        </header>
+        
+        <div class="payment-options">
+            <div class="payment-tab active" onclick="showPayment('dana')">DANA</div>
+            <div class="payment-tab" onclick="showPayment('gopay')">Gopay</div>
+            <div class="payment-tab" onclick="showPayment('qris')">QRIS</div>
+        </div>
+        
+        <div id="dana" class="payment-content active">
+            <div class="payment-details">
+                <h3><i>💳</i> Pembayaran via DANA</h3>
+                <div class="info-box">
+                    <p><strong>Nomor DANA:</strong> <span class="highlight">085693449956</span></p>
+                    <p><strong>Atas Nama:</strong> <span class="highlight">HAXXXXXX</span></p>
+                </div>
+                
+                <div class="instruction">
+                    <h4>Cara Pembayaran:</h4>
+                    <ol>
+                        <li>Buka aplikasi DANA di ponsel Anda</li>
+                        <li>Pilih menu "Kirim"</li>
+                        <li>Masukkan nomor DANA yang tertera di atas</li>
+                        <li>Masukkan jumlah nominal transfer</li>
+                        <li>Konfirmasi dan selesaikan pembayaran</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div id="gopay" class="payment-content">
+            <div class="payment-details">
+                <h3><i>💳</i> Pembayaran via Gopay</h3>
+                <div class="info-box">
+                    <p><strong>Nomor Gopay:</strong> <span class="highlight">081413059313</span></p>
+                    <p><strong>Atas Nama:</strong> <span class="highlight">M AXXXX</span></p>
+                </div>
+                
+                <div class="instruction">
+                    <h4>Cara Pembayaran:</h4>
+                    <ol>
+                        <li>Buka aplikasi Gojek di ponsel Anda</li>
+                        <li>Pilih menu "Bayar" atau "Kirim"</li>
+                        <li>Masukkan nomor Gopay yang tertera di atas</li>
+                        <li>Masukkan jumlah nominal transfer</li>
+                        <li>Konfirmasi dan selesaikan pembayaran</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div id="qris" class="payment-content">
+            <div class="payment-details">
+                <h3><i>📱</i> Pembayaran via QRIS</h3>
+                
+                <div class="qris-container">
+                    <img src="https://photos.app.goo.gl/fW6UwpvqEccawhdN6" alt="QR Code Pembayaran" class="qris-image">
+                    <p>Scan QR code di atas menggunakan aplikasi bank atau e-wallet yang mendukung QRIS</p>
+                </div>
+                
+                <div class="instruction">
+                    <h4>Cara Pembayaran:</h4>
+                    <ol>
+                        <li>Buka aplikasi bank atau e-wallet yang mendukung QRIS</li>
+                        <li>Pilih menu "Scan QR" atau "Bayar dengan QR"</li>
+                        <li>Scan QR code yang tertera di atas</li>
+                        <li>Masukkan jumlah nominal pembayaran</li>
+                        <li>Konfirmasi dan selesaikan pembayaran</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <p>Setelah melakukan pembayaran, harap kirim bukti transfer melalui:</p>
+            <a href="https://wa.me/6281413059313?text=ini%20buktinya" class="proof-button">Kirim Bukti Transfer</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Payment Gateway. Semua transaksi dilindungi.</p>
+    </footer>
+
+    <script>
+        function showPayment(method) {
+            // Sembunyikan semua konten pembayaran
+            document.querySelectorAll('.payment-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Tampilkan konten pembayaran yang dipilih
+            document.getElementById(method).classList.add('active');
+            
+            // Update tab aktif
+            document.querySelectorAll('.payment-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Aktifkan tab yang diklik
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
